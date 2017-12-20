@@ -54,5 +54,34 @@ app.post("/posts", (req, res) => {
 
 })
 
+app.get("/posts/:id", (req, res) => {
+  Post.findById(req.params.id, (err, post) => {
+    if (err) {
+      console.log(err);
+    }
+
+    res.send(post);
+  });
+});
+
+app.put("/posts/:id", (req, res) => {
+  Post.findById(req.params.id, (err, post) => {
+    if (err) { console.log(err); }
+
+    post.title = req.body.title;
+    post.description = req.body.description;
+
+    post.save((err) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+
+      res.send({
+        success: true
+      });
+    });
+  });
+});
 
 app.listen(process.env.PORT || 3000 );
