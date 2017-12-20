@@ -84,4 +84,17 @@ app.put("/posts/:id", (req, res) => {
   });
 });
 
+app.delete("/posts/:id", (req, res) => {
+  Post.remove({_id: req.params.id}, (err, post) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+
+    res.send({
+      success: true
+    })
+  })
+});
+
 app.listen(process.env.PORT || 3000 );
